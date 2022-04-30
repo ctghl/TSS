@@ -59,6 +59,7 @@ class AuthorsWorksSpider(CrawlSpider):
                 link = book['link'],
                 image = book['image']
             ).save()
+            
             for author in authors:
                 db_author = Author.get_or_create(author)[0]
                 db_book.author.connect(db_author)
