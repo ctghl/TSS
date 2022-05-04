@@ -14,6 +14,7 @@ class Book(StructuredNode):
     ISBN10 = StringProperty()
     link = StringProperty()
     image = StringProperty()
+    year = StringProperty()
     author = RelationshipTo('Author', 'AUTHOR')
 
 class Author(StructuredNode):
@@ -45,6 +46,7 @@ class AuthorsWorksSpider(CrawlSpider):
                 'ISBN13': response.css('.i13::text').get(), 
                 'ISBN10': response.css('.i10::text').get(),
                 'image': response.css('img.cover::attr(src)').get(),
+                'year':response.css('.pubinf::text').get(),
                 'link': response.url
                 }
 
@@ -57,7 +59,8 @@ class AuthorsWorksSpider(CrawlSpider):
                 ISBN13 = book['ISBN13'],
                 ISBN10 = book['ISBN10'],
                 link = book['link'],
-                image = book['image']
+                image = book['image'],
+                year = book['year']
             ).save()
             
             for author in authors:

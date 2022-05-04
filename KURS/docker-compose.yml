@@ -1,7 +1,7 @@
 version: '3'
 services:
   neo4j:
-    image: neo4j
+    image: neo4j:4.4.1
     restart: unless-stopped
     ports:
       - 7474:7474
@@ -14,7 +14,11 @@ services:
       - ./db/plugins:/plugins
     environment: 
       # Raise memory limits
-      #- NEO4J_dbms_memory_pagecache_size=1G
-      #- NEO4J_dbms.memory.heap.initial_size=1G
-      #- NEO4J_dbms_memory_heap_max__size=1G
+      - dbms_memory_pagecache_size=10G
+      - dbms.memory.heap.initial_size=1024M
+      - dbms_memory_heap_max__size=2048M
       - TEST=test
+      - NEO4J_AUTH=none
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT='yes'
+      - NEO4JLABS_PLUGINS=["graph-data-science"]
+      
